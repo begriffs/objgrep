@@ -36,6 +36,10 @@
             } else {
               newContext = context + "['" + i + "']";
             }
+
+            if (i.match(regex)) {
+              ret.push(newContext);
+            }
             try {
               ret = ret.concat(objgrep(
                 root[i],
