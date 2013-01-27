@@ -36,12 +36,16 @@
             } else {
               newContext = context + "['" + i + "']";
             }
-            ret = ret.concat(objgrep(
-              root[i],
-              regex,
-              depth - 1,
-              newContext
-            ));
+            try {
+              ret = ret.concat(objgrep(
+                root[i],
+                regex,
+                depth - 1,
+                newContext
+              ));
+            } catch (e) {
+              // if we cannot access a property, then so be it
+            }
           }
         }
         delete root[mark];
