@@ -1,13 +1,10 @@
 /*jslint browser: true, indent: 2, forin: true */
-/*global toString */
+/*global toString, console */
 (function () {
   "use strict";
   var mark = 'visited_by_objgrep',
     objgrep = function (root, regex, depth, context) {
       var className, ret = [], i, newContext;
-      if (typeof depth !== "number") {
-        depth = Infinity;
-      }
       context = context || '';
 
       if (depth < 1) {
@@ -61,6 +58,10 @@
     };
 
   Object.prototype.grep = function (regex, depth, context) {
+    if (typeof depth !== "number") {
+      depth = 5;
+      console.log('Using a default search depth of ' + depth);
+    }
     return objgrep(this, regex, depth, context);
   };
 })();
