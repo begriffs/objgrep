@@ -57,11 +57,14 @@
       return ret;
     };
 
-  Object.prototype.grep = function (regex, depth, context) {
-    if (typeof depth !== "number") {
-      depth = 5;
-      console.log('Using a default search depth of ' + depth);
+  Object.defineProperty(Object.prototype, 'grep', {
+    enumerable: false,
+    value: function (regex, depth, context) {
+      if (typeof depth !== "number") {
+        depth = 5;
+        console.log('Using a default search depth of ' + depth);
+      }
+      return objgrep(this, regex, depth, context);
     }
-    return objgrep(this, regex, depth, context);
-  };
+  });
 })();
