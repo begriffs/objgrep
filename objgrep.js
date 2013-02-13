@@ -37,7 +37,7 @@
             if (i.match(regex)) {
               ret.push(newContext);
             }
-            if (allow_dom || !(root[i] instanceof HTMLElement)) {
+            if (allow_dom || !(root[i].nodeType)) {
               try {
                 ret = ret.concat(objgrep(
                   root[i],
