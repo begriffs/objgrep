@@ -67,6 +67,9 @@
         depth = 5;
         console.log('Using a default search depth of ' + depth);
       }
+      if (typeof allow_dom === 'undefined') {
+        allow_dom = true;
+      }
       return objgrep(this, regex, depth, allow_dom, context);
     }
   });
