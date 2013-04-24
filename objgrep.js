@@ -70,7 +70,7 @@
       }, options = {}, opt;
       opts = opts || {};
       for (opt in defaults) {
-        options[opt] = opts[opt] || defaults[opt];
+        options[opt] = (opts[opt] !== undefined) ? opts[opt] : defaults[opt];
       }
       if (typeof opts.depth !== "number") {
         console.log('Using a default search depth of ' + options.depth);
