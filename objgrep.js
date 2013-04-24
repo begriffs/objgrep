@@ -68,6 +68,7 @@
         allow_dom: true,
         context: ''
       }, options = {}, opt;
+      opts = opts || {};
       for (opt in defaults) {
         options[opt] = opts[opt] || defaults[opt];
       }
