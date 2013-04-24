@@ -65,9 +65,10 @@
     value: function (regex, opts) {
       var defaults = {
         depth: 5,
-        allow_dom: true
+        allow_dom: true,
+        context: ''
       }, options = {}, opt;
-      for (opt in ['depth', 'allow_dom', 'context']) {
+      for (opt in defaults) {
         options[opt] = opts[opt] || defaults[opt];
       }
       if (typeof opts.depth !== "number") {
