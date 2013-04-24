@@ -3,7 +3,7 @@
 (function () {
   "use strict";
   var mark = 'visited_by_objgrep',
-    objgrep = function (root, regex, depth, context) {
+    objgrep = function (root, regex, depth, allow_dom, context) {
       var className, ret = [], i, newContext;
       context = context || '';
 
@@ -37,15 +37,18 @@
             if (i.match(regex)) {
               ret.push(newContext);
             }
-            try {
-              ret = ret.concat(objgrep(
-                root[i],
-                regex,
-                depth - 1,
-                newContext
-              ));
-            } catch (e) {
-              // if we cannot access a property, then so be it
+            if (allow_dom || !(root[i].nodeType)) {
+              try {
+                ret = ret.concat(objgrep(
+                  root[i],
+                  regex,
+                  depth - 1,
+                  allow_dom,
+                  newContext
+                ));
+              } catch (e) {
+                // if we cannot access a property, then so be it
+              }
             }
           }
         }
@@ -59,12 +62,20 @@
 
   Object.defineProperty(Object.prototype, 'grep', {
     enumerable: false,
-    value: function (regex, depth, context) {
-      if (typeof depth !== "number") {
-        depth = 5;
-        console.log('Using a default search depth of ' + depth);
+    value: function (regex, opts) {
+      var defaults = {
+        depth: 5,
+        allow_dom: true,
+        context: ''
+      }, options = {}, opt;
+      opts = opts || {};
+      for (opt in defaults) {
+        options[opt] = (opts[opt] !== undefined) ? opts[opt] : defaults[opt];
       }
-      return objgrep(this, regex, depth, context);
+      if (typeof opts.depth !== "number") {
+        console.log('Using a default search depth of ' + options.depth);
+      }
+      return objgrep(this, regex, options.depth, options.allow_dom, options.context);
     }
   });
 })();
