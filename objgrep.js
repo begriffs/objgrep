@@ -62,15 +62,18 @@
 
   Object.defineProperty(Object.prototype, 'grep', {
     enumerable: false,
-    value: function (regex, depth, allow_dom, context) {
-      if (typeof depth !== "number") {
-        depth = 5;
-        console.log('Using a default search depth of ' + depth);
+    value: function (regex, opts) {
+      var defaults = {
+        depth: 5,
+        allow_dom: true
+      }, options = {}, opt;
+      for (opt in ['depth', 'allow_dom', 'context']) {
+        options[opt] = opts[opt] || defaults[opt];
       }
-      if (typeof allow_dom === 'undefined') {
-        allow_dom = true;
+      if (typeof opts.depth !== "number") {
+        console.log('Using a default search depth of ' + options.depth);
       }
-      return objgrep(this, regex, depth, allow_dom, context);
+      return objgrep(this, regex, options.depth, options.allow_dom, options.context);
     }
   });
 })();
