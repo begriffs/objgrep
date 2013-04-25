@@ -30,12 +30,30 @@ After running the bookmarklet, you can grep the object:
     foo.grep(/\d+/);
     // returns [".outgrabe", ".toves[0]", ".toves[1]", ".toves[2]"]
 
-You can use it on the dom, or on any object really. It accepts a
-`depth` option to limit search depth and avoid getting caught in cyclic
-references. If you don't specify a depth it defaults to five.
+### Options
+
+<table>
+  <thead>
+    <tr><th>name</th><th>description</th><th>default value</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>depth</td>
+      <td>Limit the search depth</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <td>allow_dom</td>
+      <td>Search dom nodes too</td>
+      <td>true</td>
+    </tr>
+  </tbody>
+</table>
+
+Pass options as a hash in the second argument. For instance,
 
     // searches with depth at most two
-    foo.grep(/abe/, 2);
+    foo.grep(/abe/, {depth: 2});
     // returns [".outgrabe"]
 
 ### License
