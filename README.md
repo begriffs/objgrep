@@ -43,8 +43,13 @@ After running the bookmarklet, you can grep the object:
       <td>5</td>
     </tr>
     <tr>
-      <td>allow_dom</td>
+      <td>dom</td>
       <td>Search dom nodes too</td>
+      <td>true</td>
+    </tr>
+    <tr>
+      <td>keys</td>
+      <td>Search in object keys</td>
       <td>true</td>
     </tr>
   </tbody>

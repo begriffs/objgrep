@@ -3,11 +3,11 @@
 (function () {
   "use strict";
   var mark = 'visited_by_objgrep',
-    objgrep = function (root, regex, depth, allow_dom, context) {
-      var className, ret = [], i, newContext;
-      context = context || '';
+    objgrep = function (root, regex, opts) {
+      var className, ret = [], i, newContext, newOpts;
+      opts.context = opts.context || '';
 
-      if (depth < 1) {
+      if (opts.depth < 1) {
         return [];
       }
 
@@ -16,7 +16,7 @@
       case 'number':
       case 'boolean':
         if (root.toString().match(regex)) {
-          return [context];
+          return [opts.context];
         }
         break;
       case 'object':
@@ -27,24 +27,25 @@
         for (i in root) {
           if (i !== mark) {
             if (i.match(/^[$A-Z_][0-9A-Z_$]*$/i)) {
-              newContext = [context, i].join('.');
+              newContext = [opts.context, i].join('.');
             } else if (i.match(/^[0-9]+$/)) {
-              newContext = context + "[" + i + "]";
+              newContext = opts.context + "[" + i + "]";
             } else {
-              newContext = context + "['" + i + "']";
+              newContext = opts.context + "['" + i + "']";
             }
 
-            if (i.match(regex)) {
+            if (opts.keys && i.match(regex)) {
               ret.push(newContext);
             }
-            if (allow_dom || !(root[i] && root[i].hasOwnProperty('nodeType'))) {
+            if (opts.dom || !(root[i] && root[i].hasOwnProperty('nodeType'))) {
               try {
+                newOpts = opts;
+                newOpts.context = newContext;
+                newOpts.depth -= 1;
                 ret = ret.concat(objgrep(
                   root[i],
                   regex,
-                  depth - 1,
-                  allow_dom,
-                  newContext
+                  newOpts
                 ));
               } catch (e) {
                 // if we cannot access a property, then so be it
@@ -65,17 +66,21 @@
     value: function (regex, opts) {
       var defaults = {
         depth: 5,
-        allow_dom: true,
+        dom: true,
+        keys: true,
         context: ''
       }, options = {}, opt;
       opts = opts || {};
+      if (typeof opts !== 'object') {
+        console.log('Unknown options, see usage at https://github.com/begriffs/objgrep');
+      }
       for (opt in defaults) {
         options[opt] = (opts[opt] !== undefined) ? opts[opt] : defaults[opt];
       }
       if (typeof opts.depth !== "number") {
         console.log('Using a default search depth of ' + options.depth);
       }
-      return objgrep(this, regex, options.depth, options.allow_dom, options.context);
+      return objgrep(this, regex, options);
     }
   });
 }());
