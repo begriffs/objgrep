@@ -78,4 +78,4 @@
       return objgrep(this, regex, options.depth, options.allow_dom, options.context);
     }
   });
-})();
+}());
