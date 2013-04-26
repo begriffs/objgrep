@@ -1,6 +1,7 @@
 language: node_js
 node_js:
   - 0.10
-before_install: "npm install -g jasmine-node"
+before_install: "npm install -g jshint jasmine-node"
 script:
+  - jshint ./*.js spec/*.js
   - jasmine-node spec/*.js

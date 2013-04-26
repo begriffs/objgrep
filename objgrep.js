@@ -1,10 +1,9 @@
-/*jslint browser: true, indent: 2, forin: true */
-/*global toString, console */
+/*global console */
 (function () {
-  "use strict";
+  'use strict';
   var mark = 'visited_by_objgrep',
     objgrep = function (root, regex, opts) {
-      var className, ret = [], i, newContext;
+      var ret = [], i, newContext;
       opts.context = opts.context || '';
 
       if (opts.depth < 1) {
@@ -29,9 +28,9 @@
             if (i.match(/^[$A-Z_][0-9A-Z_$]*$/i)) {
               newContext = [opts.context, i].join('.');
             } else if (i.match(/^[0-9]+$/)) {
-              newContext = opts.context + "[" + i + "]";
+              newContext = opts.context + '[' + i + ']';
             } else {
-              newContext = opts.context + "['" + i + "']";
+              newContext = opts.context + '[\'' + i + '\']';
             }
 
             if (opts.keys && i.match(regex)) {
@@ -78,7 +77,7 @@
       for (opt in defaults) {
         options[opt] = (opts[opt] !== undefined) ? opts[opt] : defaults[opt];
       }
-      if (typeof opts.depth !== "number") {
+      if (typeof opts.depth !== 'number') {
         console.log('Using a default search depth of ' + options.depth);
       }
       return objgrep(this, regex, options);
