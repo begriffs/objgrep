@@ -4,7 +4,7 @@
   "use strict";
   var mark = 'visited_by_objgrep',
     objgrep = function (root, regex, opts) {
-      var className, ret = [], i, newContext, newOpts;
+      var className, ret = [], i, newContext;
       opts.context = opts.context || '';
 
       if (opts.depth < 1) {
@@ -39,13 +39,14 @@
             }
             if (opts.dom || !(root[i] && root[i].hasOwnProperty('nodeType'))) {
               try {
-                newOpts = opts;
-                newOpts.context = newContext;
-                newOpts.depth -= 1;
                 ret = ret.concat(objgrep(
-                  root[i],
-                  regex,
-                  newOpts
+                  root[i], regex,
+                  {
+                    context: newContext,
+                    depth: opts.depth - 1,
+                    dom: opts.dom,
+                    keys: opts.keys
+                  }
                 ));
               } catch (e) {
                 // if we cannot access a property, then so be it
