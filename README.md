@@ -1,5 +1,7 @@
 ## Search inside JavaScript objects
 
+[![Build Status](https://travis-ci.org/begriffs/objgrep.png)](https://travis-ci.org/begriffs/objgrep)
+
 The command line has `grep`, so why doesn't JavaScript?
 
 If you work with big objects (such as those in client-side MVC
