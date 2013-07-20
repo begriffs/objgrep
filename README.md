@@ -63,6 +63,12 @@ Pass options as a hash in the second argument. For instance,
     foo.grep(/abe/, {depth: 2});
     // returns [".outgrabe"]
 
+### Caveats
+ - Clicking the bookmarklet when the debugger is paused in chrome will
+   continue script execution.  Load objgrep in development (via
+  `<script>` tags) or click the bookmarklet before hitting a breakpoint to
+  work around this.
+
 ### License
 
 Objgrep is Copyright © 2013 Joe Nelson. It is free software, and may be
