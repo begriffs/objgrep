@@ -1,0 +1,25 @@
+{
+  "name": "objgrep",
+  "version": "0.0.1",
+  "description": "Find strings inside complicated javascript objects",
+  "main": "objgrep.js",
+  "scripts": {
+    "test": "jasmine-node spec/*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/begriffs/objgrep.git"
+  },
+  "keywords": [
+    "grep",
+    "structural",
+    "object",
+    "javascript",
+    "js"
+  ],
+  "author": "Joe Nelson",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/begriffs/objgrep/issues"
+  }
+}
